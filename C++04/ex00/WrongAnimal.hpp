@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:50:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/26 05:19:43 by sebasari         ###   ########.fr       */
+/*   Created: 2025/02/26 10:31:37 by sebasari          #+#    #+#             */
+/*   Updated: 2025/02/26 10:41:52 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-#define FIXED_HPP
+#ifndef WRONGANIMAL_HPP
+#define WRONGANIMAL_HPP
 #include <iostream>
-class Fixed
+
+class WrongAnimal
 {
-private:
-	int 				fixedPointNumber;
-	static const int	fractionalBits = 8;
+protected:
+    std::string type;
 public:
-	Fixed();
-	~Fixed();
-	Fixed(const Fixed& original);
+    WrongAnimal();
+    virtual ~WrongAnimal();
+    WrongAnimal(const WrongAnimal& original);
 public:
-	Fixed& operator=(const Fixed& fixed);
+    void                setType(const std::string& type);
+    std::string         getType() const;
+    void                makeSound() const;
 public:
-	void	setRawBits(int const raw);
-	int		getRawBits(void) const;
+    WrongAnimal&     operator=(const WrongAnimal& wrongAnimal);
 };
+
 
 #endif

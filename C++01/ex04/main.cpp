@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 22:10:50 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/14 09:45:58 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 07:32:03 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ int main(int argc, char *argv[])
 				outputFile << line;
 			}
 		}
+		else
+		{
+			 std::cout << "Failed to open input file." << std::endl;
+			 return (1);
+		}
+		inputFile.close();
+    	outputFile.close();
 	}
 	else
 		std::cout <<"Invalid number of argument!!!"<< std::endl;

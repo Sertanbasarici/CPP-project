@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   WrongCat.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:50:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/26 05:19:43 by sebasari         ###   ########.fr       */
+/*   Created: 2025/02/26 10:39:35 by sebasari          #+#    #+#             */
+/*   Updated: 2025/02/26 11:02:47 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-#define FIXED_HPP
+#ifndef WRONGCAT_HPP
+#define WRONGCAT_HPP
 #include <iostream>
-class Fixed
+#include "WrongAnimal.hpp"
+class WrongCat:public WrongAnimal 
 {
-private:
-	int 				fixedPointNumber;
-	static const int	fractionalBits = 8;
 public:
-	Fixed();
-	~Fixed();
-	Fixed(const Fixed& original);
+    WrongCat();
+    ~WrongCat();
+    WrongCat(const WrongCat& original);
 public:
-	Fixed& operator=(const Fixed& fixed);
-public:
-	void	setRawBits(int const raw);
-	int		getRawBits(void) const;
+    WrongCat&     operator=(const WrongCat& wrongCat);
 };
 
 #endif

@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:50:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/26 05:19:43 by sebasari         ###   ########.fr       */
+/*   Created: 2025/02/20 16:32:04 by sebasari          #+#    #+#             */
+/*   Updated: 2025/02/26 00:41:56 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-#define FIXED_HPP
+#ifndef ScavTrap_HPP
+#define ScavTrap_HPP
+#include "ClapTrap.hpp"
 #include <iostream>
-class Fixed
-{
-private:
-	int 				fixedPointNumber;
-	static const int	fractionalBits = 8;
-public:
-	Fixed();
-	~Fixed();
-	Fixed(const Fixed& original);
-public:
-	Fixed& operator=(const Fixed& fixed);
-public:
-	void	setRawBits(int const raw);
-	int		getRawBits(void) const;
-};
 
+class ScavTrap: public ClapTrap
+{
+public:
+	ScavTrap();
+	~ScavTrap();
+	ScavTrap(std::string name);
+	ScavTrap(const ScavTrap& original);
+public:
+	void	attack(const std::string& target);
+	void	guardGate();
+public:
+	ScavTrap& operator=(const ScavTrap& claptrap);
+};
 #endif

@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:38:06 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/12 19:48:52 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 06:42:42 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ public:
 	void		attack();
 	void		setName(std::string name);
 	void		setWeapon(Weapon& weapon);
-	std::string	getName();
-	Weapon		getWeapon();
+	std::string	getName() const;
+	Weapon		getWeapon() const;
 };
 
 #endif

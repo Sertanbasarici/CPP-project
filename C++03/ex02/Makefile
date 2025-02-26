@@ -1,8 +1,8 @@
-C++ = g++
+CXX = g++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-SOURCE = main.cpp
+SOURCE = main.cpp ClapTrap.cpp ScavTrap.cpp  FragTrap.cpp
 
 TARGET = main
 
@@ -11,10 +11,10 @@ OBJS = $(SOURCE:.cpp=.o)
 all:$(TARGET)
 
 $(TARGET):$(OBJS)
-	$(C++) $(FLAGS) $(OBJS) -o $(TARGET)
+	$(CXX) $(FLAGS) $(OBJS) -o $(TARGET)
 
 %.o: %.cpp
-	@$(C++) $(FLAGS) -c $< -o $@
+	@$(CXX) $(FLAGS) -c $< -o $@
 
 clean:
 	@rm -fr $(OBJS)
@@ -25,3 +25,4 @@ fclean:
 re:fclean all
 
 .PHONY: all clean fclean re
+

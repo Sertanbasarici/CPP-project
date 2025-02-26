@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:53:29 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/12 17:22:14 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 06:20:39 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	Weapon::setType(const std::string& type)
 	this->type = type;
 }
 
-std::string Weapon::getType()
+std::string Weapon::getType() const
 {
 	return (this->type);
 }

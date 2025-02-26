@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:43:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/19 13:16:17 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 02:33:06 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ private:
 
 public:
 	Fixed();
+	~Fixed();
 	Fixed(const Fixed& original);
 	Fixed(const int value);
 	Fixed(const float value);
-	~Fixed();
-	Fixed&	operator=(const Fixed& fixed);
+public:
 	float	toFloat() const;
 	int		toInt() const;
 	void	setRawBits(int const raw);
 	int		getRawBits() const;
+public:
+	Fixed&	operator=(const Fixed& fixed);
 };
 
 std::ostream& operator<<(std::ostream &COUT,const Fixed& fixed);

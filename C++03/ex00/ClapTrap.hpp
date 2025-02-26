@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 23:46:44 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/20 00:48:56 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:09:30 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ public:
 	ClapTrap(std::string name);
 public:
 	void			setName(const std::string& name);
-	void			setHitPoints(const int& hitPoints);
-	void			setEnergy(const int& energy);
 	void			setAttackDamage(const int& attack);
 	std::string		getName() const;
 	unsigned int	getHitPoints() const;

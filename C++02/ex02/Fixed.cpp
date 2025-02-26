@@ -6,12 +6,6 @@ Fixed::Fixed()
 	this->fixedPointNumber = 0;
 }
 
-Fixed::Fixed(const Fixed& original)
-{
-	std::cout << "Copy constructor called" << std::endl;
-	*this = original;
-}
-
 Fixed::Fixed(const int value)
 {
 	std::cout << "Int constructor called" << std::endl;
@@ -24,6 +18,12 @@ Fixed::Fixed(const float value)
 	this->fixedPointNumber = roundf(value * (1 << fractionalBits));
 }
 
+Fixed::Fixed(const Fixed& original)
+{
+	std::cout << "Copy constructor called" << std::endl;
+	*this = original;
+}
+
 Fixed::~Fixed()
 {
 	std::cout << "Destructor called" << std::endl;
@@ -32,7 +32,6 @@ Fixed::~Fixed()
 Fixed& Fixed::operator=(const Fixed& fixed)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
-	
 	if (this != &fixed)
 		this->fixedPointNumber = fixed.getRawBits();
 	return *this;
@@ -46,6 +45,7 @@ int	Fixed::getRawBits(void) const
 
 void	Fixed::setRawBits(int const raw)
 {
+	std::cout << "setRawBits member function called" << std::endl;
 	this->fixedPointNumber = raw;
 }
 
@@ -59,94 +59,112 @@ int Fixed::toInt(void) const
 	return this->fixedPointNumber >> fractionalBits;
 }
 
-std::ostream& operator<<(std::ostream &COUT,const Fixed& fixed)
+bool	Fixed::operator<(const Fixed& fixed) const
 {
-	COUT << fixed.toFloat();
-	return COUT;
+	return (this->fixedPointNumber < fixed.fixedPointNumber);
 }
 
-bool	Fixed::operator<(const Fixed& fixed)
+bool	Fixed::operator>(const Fixed& fixed) const
 {
-	return this->fixedPointNumber < fixed.fixedPointNumber;
+	return (this->fixedPointNumber > fixed.fixedPointNumber);
 }
 
-bool	Fixed::operator>(const Fixed& fixed)
-{
-	return this->fixedPointNumber > fixed.fixedPointNumber;
-}
-
-bool	Fixed::operator>=(const Fixed& fixed)
+bool	Fixed::operator>=(const Fixed& fixed) const
 {
 	return this->fixedPointNumber >= fixed.fixedPointNumber;
 }
 
-bool	Fixed::operator<=(const Fixed& fixed)
+bool	Fixed::operator<=(const Fixed& fixed) const
 {
 	return this->fixedPointNumber <= fixed.fixedPointNumber;
 }
 
-bool	Fixed::operator==(const Fixed& fixed)
+bool	Fixed::operator==(const Fixed& fixed) const
 {
 	return this->fixedPointNumber == fixed.fixedPointNumber;
 }
 
-bool	Fixed::operator!=(const Fixed& fixed)
+bool	Fixed::operator!=(const Fixed& fixed) const
 {
 	return this->fixedPointNumber != fixed.fixedPointNumber;
 }
 
-Fixed	Fixed::operator+(const Fixed& fixed)
+Fixed	Fixed::operator+(const Fixed& fixed) const
 {
-	Fixed temp;
-	temp.fixedPointNumber = this->toFloat() + fixed.toFloat();
-
-	return (temp);
+	return Fixed(this->toFloat() + fixed.toFloat());
 }
 
-Fixed	Fixed::operator-(const Fixed& fixed)
+Fixed	Fixed::operator-(const Fixed& fixed) const
 {
-	Fixed temp;
-	temp.fixedPointNumber = this->toFloat() - fixed.toFloat();
-
-	return (temp);
+	return Fixed(this->toFloat() - fixed.toFloat());
 }
 
-Fixed	Fixed::operator*(const Fixed& fixed)
+Fixed	Fixed::operator*(const Fixed& fixed) const
 {
-	Fixed temp;
-	temp.fixedPointNumber = this->toFloat() * fixed.toFloat();
-
-	return (temp);
+	return Fixed((this->toFloat() * fixed.toFloat()));
 }
 
-Fixed	Fixed::operator/(const Fixed& fixed)
+Fixed	Fixed::operator/(const Fixed& fixed) const
 {
-	Fixed temp;
-	temp.fixedPointNumber = this->toFloat() / fixed.toFloat();
-
-	return (temp);
+	return Fixed((this->toFloat() / fixed.toFloat()));
 }
 
 Fixed	Fixed::operator++()
 {
 	this->fixedPointNumber++;
+	return (*this);
 }
 
 Fixed	Fixed::operator++(int)
 {
-	Fixed temp(this->fixedPointNumber);
+	Fixed temp = *this;
 	this->fixedPointNumber++;
-	return (this->fixedPointNumber);
+	return (temp);
 }
 
 Fixed	Fixed::operator--()
 {
 	this->fixedPointNumber--;
+	return (*this);
 }
 
 Fixed	Fixed::operator--(int)
 {
-	Fixed temp(this->fixedPointNumber);
+	Fixed temp = *this;
 	this->fixedPointNumber--;
-	return (this->fixedPointNumber);
+	return (temp);
+}
+
+Fixed&  Fixed::min(Fixed& a, Fixed& b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+Fixed& Fixed::max(Fixed& a, Fixed& b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+const Fixed& Fixed::max(const Fixed& a,const Fixed& b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+std::ostream& operator<<(std::ostream &COUT,const Fixed& fixed)
+{
+	COUT << fixed.toFloat();
+	return COUT;
 }

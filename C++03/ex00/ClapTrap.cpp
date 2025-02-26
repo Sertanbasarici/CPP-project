@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 23:58:00 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/20 17:17:13 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:18:52 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,64 +17,27 @@ ClapTrap::ClapTrap()
 	this->hitPoints = 10;
 	this->energy = 10;
 	this->attackDamage = 0;
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "Default constructor of ClapTrap called" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "Default destructar called" << std::endl;
+	std::cout << "Default destructor of ClapTrap called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name)
 {
-	std::cout << "Name constructor called" << std::endl;
+	this->hitPoints = 10;
+	this->energy = 10;
+	this->attackDamage = 0;
 	this->name = name;
+	std::cout << "Name constructor of ClapTrap called" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& original)
 {
-	std::cout << "copy constructor called" << std::endl;
+	std::cout << "copy constructor of ClapTrap called" << std::endl;
 	*this = original;
-}
-
-void	ClapTrap::setName(const std::string& name)
-{
-	this->name = name;
-}
-
-void	ClapTrap::setHitPoints(const int& getHitPoints)
-{
-	this->hitPoints = getHitPoints;
-}
-
-void	ClapTrap::setEnergy(const int& energy)
-{
-	this->energy = energy;
-}
-
-void	ClapTrap::setAttackDamage(const int& attack)
-{
-	this->attackDamage = attack;
-}
-
-std::string	ClapTrap::getName() const
-{
-	return (this->name);
-}
-
-unsigned int ClapTrap::getHitPoints() const
-{
-	return (this->hitPoints);
-}
-
-unsigned int	ClapTrap::getEnergy() const
-{
-	return (this->energy);
-}
-
-unsigned int	ClapTrap::getAttackDamage() const
-{
-	return (this->attackDamage);
 }
 
 void		ClapTrap::attack(const std::string& target)
@@ -84,6 +47,8 @@ void		ClapTrap::attack(const std::string& target)
 		std::cout << "ClapTrap " << this->name << " attacks " << target << ", causing "<< this->attackDamage << " points of damage!" << std::endl;
 		this->energy--;
 	}
+	else
+		std::cout << "ClapTrap " << this->name << " cannot attack no energy left" << std::endl;
 }
 
 void		ClapTrap::takeDamage(unsigned int amount)
@@ -104,6 +69,8 @@ void		ClapTrap::beRepaired(unsigned int amount)
 		this->energy--;
 		this->hitPoints += amount;
 	}
+	else
+		std::cout << "ClapTrap " << this->name << " cannot be repaired no energy left" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& claptrap)
@@ -114,8 +81,39 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& claptrap)
 	{
 		this->name = claptrap.getName();
 		this->hitPoints = claptrap.getHitPoints();
-		this->energy = claptrap.getEnergy();
+		this->energy = claptrap.energy;
 		this->attackDamage = claptrap.getAttackDamage();
 	}
 	return *this;
+}
+
+void	ClapTrap::setName(const std::string& name)
+{
+	this->name = name;
+}
+
+
+void	ClapTrap::setAttackDamage(const int& attack)
+{
+	this->attackDamage = attack;
+}
+
+std::string	ClapTrap::getName() const
+{
+	return (this->name);
+}
+
+unsigned int ClapTrap::getHitPoints() const
+{
+	return (this->hitPoints);
+}
+
+unsigned int	ClapTrap::getAttackDamage() const
+{
+	return (this->attackDamage);
+}
+
+unsigned int	ClapTrap::getEnergy() const
+{
+	return (this->energy);
 }

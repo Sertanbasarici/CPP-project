@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:43:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/19 14:35:40 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/26 04:52:19 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,31 @@ public:
 	Fixed(const float value);
 	~Fixed();
 public:
-	Fixed&	operator=(const Fixed& fixed);
-	bool	operator<(const Fixed& fixed);
-	bool	operator>(const Fixed& fixed);
-	bool	operator>=(const Fixed& fixed);
-	bool	operator<=(const Fixed& fixed);
-	bool	operator==(const Fixed& fixed);
-	bool	operator!=(const Fixed& fixed);
-	Fixed	operator+(const Fixed& fixed);
-	Fixed	operator-(const Fixed& fixed);
-	Fixed	operator*(const Fixed& fixed);
-	Fixed	operator/(const Fixed& fixed);
-	Fixed	operator++();
-	Fixed	operator++(int);
-	Fixed	operator--();
-	Fixed	operator--(int);
-public:
 	float	toFloat() const;
 	int		toInt() const;
 	void	setRawBits(int const raw);
 	int		getRawBits() const;
+public:
+	static Fixed& min(Fixed& a, Fixed& b);
+	static const Fixed& min(const Fixed& a, const Fixed& b);
+	static Fixed& max(Fixed& a, Fixed& b);
+	static const Fixed& max(const Fixed& a, const Fixed& b);
+public:
+	Fixed&	operator=(const Fixed& fixed);
+	bool	operator<(const Fixed& fixed) const;
+	bool	operator>(const Fixed& fixed) const;
+	bool	operator>=(const Fixed& fixed) const;
+	bool	operator<=(const Fixed& fixed) const;
+	bool	operator==(const Fixed& fixed) const;
+	bool	operator!=(const Fixed& fixed) const;
+	Fixed	operator+(const Fixed& fixed) const;
+	Fixed	operator-(const Fixed& fixed) const;
+	Fixed	operator*(const Fixed& fixed) const;
+	Fixed	operator/(const Fixed& fixed) const;
+	Fixed	operator++();
+	Fixed	operator++(int);
+	Fixed	operator--();
+	Fixed	operator--(int);
 };
 
 std::ostream& operator<<(std::ostream &COUT,const Fixed& fixed);
