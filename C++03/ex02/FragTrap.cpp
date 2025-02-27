@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:31:24 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/26 01:36:22 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/27 09:28:04 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 FragTrap::FragTrap(): ClapTrap()
 {
-	this->energy = 50;
+	this->energy = 100;
 	this->attackDamage = 30;
-    std::cout <<"Defualt constructor of FragTrap called" << std::endl;
+	std::cout <<"Defualt constructor of FragTrap called" << std::endl;
 }
 
 FragTrap::~FragTrap()
@@ -38,6 +38,44 @@ FragTrap::FragTrap(const FragTrap& original): ClapTrap(original)
     *this = original;
 }
 
+void		FragTrap::attack(const std::string& target)
+{
+	if (this->energy > 0 && this->hitPoints > 0)
+	{
+		std::cout << "FragTrap " << this->name << " attacks " << target << ", causing "<< this->attackDamage << " points of damage!" << std::endl;
+		this->energy--;
+	}
+	else
+		std::cout << "FragTrap " << this->name << " cannot attack" << std::endl;
+}
+
+void		FragTrap::takeDamage(unsigned int amount)
+{
+
+	std::cout << "FragTrap " << this->name << " get damage, causing "<< amount << " of damage" << std::endl;
+	if (this->hitPoints > amount)
+		this->hitPoints -= amount;
+	else
+		this->hitPoints = 0;
+}
+
+void		FragTrap::beRepaired(unsigned int amount)
+{
+	if (this->energy > 0)
+	{
+		std::cout << "FragTrap " << this->name << " get reparied, "<< amount << std::endl;
+		this->energy--;
+		this->hitPoints += amount;
+	}
+	else
+		std::cout << "FragTrap " << this->name << " cannot be repaired no energy left" << std::endl;
+}
+
+void	FragTrap::highFivesGuys(void)
+{
+	std::cout << "FragTrap named " << this->name << " high fived with friends"<< std::endl;
+}
+
 FragTrap& FragTrap::operator=(const FragTrap& ScavTrap)
 {
 	std::cout << "Copy assignment of FragTrap operator called" << std::endl;
@@ -50,9 +88,4 @@ FragTrap& FragTrap::operator=(const FragTrap& ScavTrap)
 		this->attackDamage = ScavTrap.getAttackDamage();
 	}
 	return *this;
-}
-
-void    FragTrap::highFivesGuys(void)
-{
-    std::cout << "FragTrap named " << this->name << " gives everyone high fives"<< std::endl;
 }

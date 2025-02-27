@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:32:04 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/26 00:41:56 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/27 08:49:21 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ public:
 	ScavTrap(const ScavTrap& original);
 public:
 	void	attack(const std::string& target);
+	void	beRepaired(unsigned int amount);
+	void	takeDamage(unsigned int amount);
 	void	guardGate();
 public:
 	ScavTrap& operator=(const ScavTrap& claptrap);
