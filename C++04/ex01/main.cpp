@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:07:35 by sebasari          #+#    #+#             */
-/*   Updated: 2025/02/28 11:11:35 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:14:01 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,36 @@
 int main()
 
 {
-    // const Animal* meta = new Animal();
-    // const Animal* j = new Dog();
-    // const Animal* i = new Cat();
-// 
-    // std::cout << j->getType() << " " << std::endl;
-    // std::cout << i->getType() << " " << std::endl;
-    // i->makeSound(); //will output the cat sound!
-    // j->makeSound();
-    // meta->makeSound();
-    // 
-    // delete meta;
-    // delete j;
-    // delete i;
-    const WrongAnimal meta; //= new WrongAnimal();
-    const WrongCat i; //= new WrongCat();
-    meta.makeSound();
-    i.makeSound(); //will output the cat sound!
+	{
+		const Animal* j = new Dog();
+		const Animal* i = new Cat();
 
-    return 0;
+		delete i;
+		delete j;
+	}
+	{
+		Dog* j = new Dog("i love bones");
+		Dog* i = new Dog();
+
+		j->print();
+		i->print();
+		*i = *j;
+		std::cout << "--------------------------------------" << std::endl;
+		j->print();
+		i->print();
+		delete i;
+		delete j;
+	}
+	{
+		const Animal* animals[10];
+		for (int i = 0; i < 10; i++)
+		{
+			if (i % 2 == 0)
+				animals[i] = new Cat();
+			else
+				animals[i] = new Dog();
+		}
+		for (int i = 0; i < 10; i++)
+			delete animals[i];
+	}
 }
