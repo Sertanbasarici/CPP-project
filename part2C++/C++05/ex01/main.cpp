@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:03:06 by sebasari          #+#    #+#             */
-/*   Updated: 2025/03/19 12:29:02 by sebasari         ###   ########.fr       */
+/*   Created: 2025/03/10 22:30:12 by sebasari          #+#    #+#             */
+/*   Updated: 2025/03/19 14:16:54 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-#define DOG_HPP
-#include <iostream>
-#include "Brain.hpp"
-#include "Animal.hpp"
-class Dog: public AnimalBureaucrat& b
+#include "Form.hpp"
+
+int main()
 {
-private:
-    Brain *brain;
-public:
-    Dog();
-    ~Dog();
-    Dog(const std::string idea);
-    Dog(const Dog& original);
-public:
-    void        print();
-    void        makeSound() const;
-public:
-    Dog&     operator=(const Dog& dog);
-};
-
-
-#endif
+	Bureaucrat b(2);
+	Form a;
+	//try 
+	//{
+	//	Bureaucrat ba(2);
+	//	ba.increamentGrade();
+	//	ba.increamentGrade();
+	//	std::cout << ba << std::endl;
+	//	std::cout << ba.getName() << std::endl;
+	//	std::cout << ba.getGrade() << std::endl;
+	//}
+	//catch (std::runtime_error& e)
+	//{
+	//	std::cout << "exception: " << e.what() << std::endl;
+	//}
+	std::cout << a << std::endl;
+}

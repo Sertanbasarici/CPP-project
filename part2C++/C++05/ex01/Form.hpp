@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:03:06 by sebasari          #+#    #+#             */
-/*   Updated: 2025/03/19 12:29:02 by sebasari         ###   ########.fr       */
+/*   Created: 2025/03/19 12:56:06 by sebasari          #+#    #+#             */
+/*   Updated: 2025/03/19 14:23:50 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-#define DOG_HPP
+#ifndef FORM_HPP
+#define FORM_HPP
+
 #include <iostream>
-#include "Brain.hpp"
-#include "Animal.hpp"
-class Dog: public AnimalBureaucrat& b
+#include "Bureaucrat.hpp"
+
+class Form
 {
 private:
-    Brain *brain;
+	std::string	const	name;
+	bool				sign;
+	int const			gradeS;
+	int const			gradeE;
 public:
-    Dog();
-    ~Dog();
-    Dog(const std::string idea);
-    Dog(const Dog& original);
+	Form();
+	~Form();
+	Form(const Form& original);
 public:
-    void        print();
-    void        makeSound() const;
+	std::string		getName() const;
+	bool			getSign() const;
+	int				getGradeS() const;
+	int				getGradeE() const;
+	void			beSigned(Bureaucrat& b);
 public:
-    Dog&     operator=(const Dog& dog);
+	Form& operator=(const Form& f);
 };
-
-
+std::ostream& operator<<(std::ostream& COUT, const Form& b);
 #endif
