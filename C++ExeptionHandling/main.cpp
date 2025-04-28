@@ -1,29 +1,23 @@
 #include <iostream>
 
-class custom_exception: public std::exception
+void	stdException(std::string str)
 {
-	virtual const char* what() const noexcept
+	try
 	{
-		return "Custom exception";
+		std::cout << str.at(str.size() + 1)<< std::endl;
+		
 	}
-};
+	catch(const std::out_of_range& e)
+	{
+		std::cout << "Exception: " << e.what() << std::endl;
+	}
+	catch (const std::runtime_error& e1)
+	{
+		std::cout << "Exception runtime_error: " << e1.what() << std::endl;
+	}
+}
 
 int main()
 {
-
-	std::string word;
-
-	word = "four";
-
-	
-	try
-	{
-		//std::cout <<word.at(4)<< std::endl;
-		//int *array = new int[99999999999999];
-		throw std::runtime_error("agaa");
-	}
-	catch(std::exception& e)
-	{
-		std::cout << "Exception: "<< e.what()<< std::endl;
-	}
+	stdException("ahmet");
 }

@@ -6,7 +6,7 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 22:30:14 by sebasari          #+#    #+#             */
-/*   Updated: 2025/03/19 14:33:51 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:24:13 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "Form.hpp"
 #include <iostream>
+class Form;
 
 class Bureaucrat
 {

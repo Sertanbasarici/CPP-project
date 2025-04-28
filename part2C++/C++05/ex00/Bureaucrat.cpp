@@ -6,17 +6,17 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 22:30:17 by sebasari          #+#    #+#             */
-/*   Updated: 2025/03/19 12:48:43 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:20:36 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(): name("cabir")
+Bureaucrat::Bureaucrat(): name("Name")
 {
 }
 
-Bureaucrat::Bureaucrat(const int grade): name("kemal")
+Bureaucrat::Bureaucrat(const int grade): name("Name")
 {
 	if (grade < 1)
 		throw std::runtime_error("Bureaucrat::GradeTooHighException");

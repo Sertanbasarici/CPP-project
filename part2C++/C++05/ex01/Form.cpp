@@ -6,14 +6,14 @@
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:56:09 by sebasari          #+#    #+#             */
-/*   Updated: 2025/03/19 14:29:18 by sebasari         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:57:57 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-Form::Form(): name("Cabir"), gradeE(1), gradeS(150)
+Form::Form(): name("Name"), gradeS(1), gradeE(150)
 {
 }
 
@@ -21,7 +21,7 @@ Form::~Form()
 {
 }
 
-Form::Form(const Form& original):gradeE(original.getGradeE()), gradeS(original.getGradeS())
+Form::Form(const Form& original):gradeS(original.getGradeE()), gradeE(original.getGradeS())
 {
 	*this = original;
 }
@@ -66,5 +66,6 @@ Form& Form::operator=(const Form& f)
 
 std::ostream& operator<<(std::ostream& COUT, const Form& f)
 {
-	COUT << "name:" << f.getName() << "signed:"<< f.getSign() << "Sign level:" << f.getGradeS()  << "Execute level:" << f.getGradeE() << std::endl;
+	COUT << "name:" << f.getName() << " signed:"<< f.getSign() << " Sign level: " << f.getGradeS()  << " Execute level: " << f.getGradeE() << std::endl;
+	return (COUT);
 }
