@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 22:30:12 by sebasari          #+#    #+#             */
-/*   Updated: 2025/04/28 18:26:21 by sebasari         ###   ########.fr       */
+/*   Created: 2025/09/15 12:21:08 by sebasari          #+#    #+#             */
+/*   Updated: 2025/09/15 12:26:38 by sebasari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
+#ifndef SCALARCONVERTER_HPP
+#define SCALARCONVERTER_HPP
 
-int main()
-{
-	Bureaucrat b(2);
-	try 
-	{
-		Bureaucrat ba(2);
-		ba.increamentGrade();
-		ba.increamentGrade();
-		std::cout << ba << std::endl;
-		std::cout << ba.getName() << std::endl;
-		std::cout << ba.getGrade() << std::endl;
-	}
-	catch (std::runtime_error& e)
-	{
-		std::cout << "exception: " << e.what() << std::endl;
-	}
-	// std::cout << b << std::endl;
-}
+
+#include <string>
+
+class ScalarConverter {
+private:
+    ScalarConverter();
+    ScalarConverter(const ScalarConverter &);
+    ScalarConverter &operator=(const ScalarConverter &);
+    ~ScalarConverter();
+
+public:
+    static void convert(const std::string &literal);
+};
+
+
+#endif
