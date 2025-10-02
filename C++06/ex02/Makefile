@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS = main.cpp
 
-OBJS  = $(SRCS:.cpp =.o)
+OBJS  = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
@@ -14,9 +14,10 @@ $(NAME): $(OBJS)
 	$(CXX) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -fr $(OBJS)
+	rm -f $(OBJS)
 fclean: clean
-	rm -fr $(NAME)
+	rm -f $(NAME)
+	
 re: fclean all
 
 .PHONY: all clean fclean re

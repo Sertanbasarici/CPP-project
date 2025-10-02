@@ -6,8 +6,8 @@
 class Base
 {
 public:
-    Base();
-    virtual ~Base();
+    Base(){};
+    virtual ~Base(){};
 };
 
 #endif

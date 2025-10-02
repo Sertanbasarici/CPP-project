@@ -15,13 +15,11 @@ int main()
     Data* deserialized = Serializer::deserialize(raw);
     std::cout << "Deserialized address: " << deserialized << std::endl;
 
-    // Kontrol: aynı mı?
     if (deserialized == &myData)
-        std::cout << "✅ Deserialization successful!" << std::endl;
+        std::cout << "Deserialization successful!" << std::endl;
     else
-        std::cout << "❌ Deserialization failed!" << std::endl;
+        std::cout << "Deserialization failed!" << std::endl;
 
-    // Data’ya ulaşabiliyor musun?
     std::cout << "Number: " << deserialized->number << std::endl;
     std::cout << "Text: " << deserialized->text << std::endl;
 

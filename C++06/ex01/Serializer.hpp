@@ -7,8 +7,8 @@
 class Serializer
 {
 private:
-    Serializer(); // private constructor -> new yapılamaz
-    ~Serializer(); // private destructor
+    Serializer();
+    ~Serializer();
     Serializer(const Serializer &);
     Serializer &operator=(const Serializer &);
 

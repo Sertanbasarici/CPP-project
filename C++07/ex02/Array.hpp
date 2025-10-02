@@ -21,7 +21,6 @@ public:
     Array<T>& operator=(const Array& other);
     T& operator[](unsigned int index);
     const T& operator[](unsigned int index) const;
-
 };
 
 

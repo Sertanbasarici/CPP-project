@@ -116,11 +116,7 @@ static void printIntFromIntLiteral(const std::string &literal)
         std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(lv) << "\n";
         return;
     }
-
-    // Buraya gelindiyse int sınırları içinde
     int value = static_cast<int>(lv);
-
-    // Char yazdır
     std::cout << "char: ";
     if (value < 0 || value > 255) {
         std::cout << "impossible\n";
@@ -311,12 +307,12 @@ static void printPseudoDouble(const std::string &literal)
     std::cout << "int: impossible\n";
 
 
-    if (literal == "nanf")
+    if (literal == "nan")
     {
         std::cout << "float: nanf\n";
         std::cout << "double: nan\n";
     }
-    else if (literal == "+inff")
+    else if (literal == "+inf")
     {
         std::cout << "float: +inff\n";
         std::cout << "double: +inf\n";
