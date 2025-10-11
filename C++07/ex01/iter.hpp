@@ -2,7 +2,7 @@
 #define ITER_HPP
 
 template <typename T, typename F>
-void    iter(T *array, int length, F func)
+void    iter(T *array, const int length, F func)
 {
     if (!array)
         return ;

@@ -24,7 +24,7 @@ public:
 class Span
 {
 private:
-    size_t N;
+    unsigned int N;
     std::vector<int> v;
 public:
     Span();
@@ -32,10 +32,11 @@ public:
     ~Span();
     Span(const Span& original);
 public:
-    void        addNumber(const size_t  num);
-    void        multipleAddNumber(const size_t num, const size_t times);
-    size_t      shortestSpan();
-    size_t      longestSpan();
+    void        addNumber(const int  num);
+    void        multipleAddNumber(const int num, const size_t times);
+    unsigned int      shortestSpan();
+    unsigned int      longestSpan();
+    unsigned int      getN();
 public:
     Span& operator=(const Span& other);
 
