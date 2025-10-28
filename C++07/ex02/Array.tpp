@@ -62,7 +62,6 @@ Array<T>& Array<T>::operator=(const Array& other)
     return *this;
 }
 
-
 template <typename T>
 T&  Array<T>::operator[](unsigned int index)
 {
