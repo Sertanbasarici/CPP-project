@@ -51,10 +51,11 @@ unsigned int Span::shortestSpan()
     long long diff = 4294967295;
     for (iterator = tmp.begin(); iterator + 1 != tmp.end();iterator++)
     {
-        if (*(iterator + 1) - *(iterator) < diff)
-            diff = static_cast<long long>(*(iterator + 1)) - static_cast<long long>(*(iterator));
+        long long cur = static_cast<long long>(*(iterator + 1)) - static_cast<long long>(*iterator);
+        if (cur < diff)
+            diff = cur;
     }
-    return diff;
+     return static_cast<unsigned int>(diff);
 }
 
 Span& Span::operator=(const Span& other)
