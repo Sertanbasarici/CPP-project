@@ -1,7 +1,7 @@
-NAME = RPN
+NAME = btc
 CPP = c++
 CPPFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = main.cpp RPN.cpp
+SRCS = main.cpp BitcoinExchange.cpp
 
 all: $(NAME)
 
