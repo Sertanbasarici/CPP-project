@@ -18,7 +18,7 @@ class RPN
 
     public:
         int calculate(char c);
-        void executer(std::string str);
+        void executer(const std::string &str);
         
 };
 

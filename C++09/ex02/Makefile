@@ -1,16 +1,17 @@
+
 NAME = PmergeMe
-CPP = c++
-CPPFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = main.cpp PmergeMe.cpp
+
+CC = c++
+
+SRC = $(wildcard *.cpp)
+FLAGS = -std=c++98 -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(SRCS)
-	$(CPP) $(CPPFLAGS) $(SRCS) -o $@
+$(NAME): $(SRC)
+	$(CC) $(FLAGS) $(SRC)  -o $(NAME)
 
 clean:
-	rm -rf $(NAME)
-
-fclean: clean
+	$(RM) $(NAME)
 
 re: clean all

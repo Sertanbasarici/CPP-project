@@ -1,11 +1,17 @@
 #include "BitcoinExchange.hpp"
 
-int main(int ac, char **av)
+int main(int argc, char **argv)
 {
-    if (ac != 2)
-        return (std::cerr << "Error: The program requires exactly one argument." << std::endl, 1);
-    BitcoinExchange exchange;
+    if (argc != 2)
+    {
+        std::cerr << "Error: could not open file." << std::endl;
+        return 1;
+    }
 
-    exchange.readFromDB();
-    exchange.readFromFile(av[1]);
+    BitcoinExchange btc;
+
+    btc.readFromDB();
+    btc.readFromFile(argv[1]);
+
+    return 0;
 }

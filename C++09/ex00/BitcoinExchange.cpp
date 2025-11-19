@@ -2,122 +2,226 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
-#include <limits>
+#include <cctype>
 
-BitcoinExchange::BitcoinExchange() {}
-BitcoinExchange::~BitcoinExchange() {}
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &cpy)
+// ----------------- helper: trim -----------------
+static std::string trim(const std::string &str)
 {
-    if (this != &cpy)
-        this->dataBase = cpy.dataBase;
-}
-
-BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &copy)
-{
-    (void)copy;
-    return *this;
-}
-
-
-void    BitcoinExchange::readFromDB()
-{
-    std::ifstream file("data.csv");
-    
-    if (!file.is_open())
-    {
-        std::cerr << "Cannot open given file." << std::endl; return ;
-    }
-
-    std::string line;
-    while (std::getline(file, line))
-    {
-        std::stringstream ss(line);
-        std::string date, rateStr;
-        float rate;
-
-        std::getline(ss, date, ',');
-        std::getline(ss, rateStr, ',');
-        rate = std::atof(rateStr.c_str());
-
-       dataBase.insert(std::pair<std::string, float>(date, rate));
-    }
-}
-
-std::string trim(const std::string &str)
-{
-    size_t first = str.find_first_not_of(" \t\r\n");
+    std::string::size_type first = str.find_first_not_of(" \t\r\n");
     if (first == std::string::npos)
         return "";
-
-    size_t last = str.find_last_not_of(" \t\r\n");
+    std::string::size_type last = str.find_last_not_of(" \t\r\n");
     return str.substr(first, last - first + 1);
 }
 
-void BitcoinExchange::findDateAndPrint(const std::string& date, float value)
+// ----------------- Orthodox Canonical -----------------
+BitcoinExchange::BitcoinExchange() {}
+
+BitcoinExchange::~BitcoinExchange() {}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &cpy)
 {
-    std::map<std::string, float>::iterator it = dataBase.find(date);
-    
-    if (it != dataBase.end())
-    {
-        std::cout << date << " => " << value << " = " << (it->second * value) << std::endl;
-    }
-    else
-    {
-        it = dataBase.lower_bound(date);
-        if (it != dataBase.begin()) {
-            --it;
-            std::cout << date << " => " << value << " = " << (it->second * value) << std::endl;
-        }
-        else
-        {
-            std::cout << "Error: no valid date found for: " << date << std::endl;
-        }
-    }
+    this->dataBase = cpy.dataBase;
 }
 
-void BitcoinExchange::checkLineAndPrint(const std::string& line)
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &cpy)
 {
-    size_t delimiterPos = line.find('|');
-    if (delimiterPos != std::string::npos)
-    {
-        std::string date = trim(line.substr(0, delimiterPos));
-        std::string valueStr = trim(line.substr(delimiterPos + 1));
-
-        float value = std::atof(valueStr.c_str());
-
-        int year = std::atoi(date.substr(0, 4).c_str());
-        int month = std::atoi(date.substr(5, 2).c_str());
-        int day = std::atoi(date.substr(8, 2).c_str());
-
-        if (year > 2022 || month < 1 || month > 12 || day < 1 || day > 31)
-            std::cout << "Error: bad input => " << date << std::endl;
-        else if (value <= 0)
-            std::cout << "Error: not a positive number. = " << value << std::endl;
-        else if (value >= 1000)
-            std::cout << "Error: too large a number." << std::endl;
-        else
-            findDateAndPrint(date, value);
-    }
-    else
-    {
-        std::cout << "Error: bad input => " << line.substr(0, 10) << std::endl;
-    }
+    if (this != &cpy)
+        this->dataBase = cpy.dataBase;
+    return *this;
 }
 
-void BitcoinExchange::readFromFile(const std::string& fileName)
+// ----------------- Date & Value helpers -----------------
+bool BitcoinExchange::isValidDate(const std::string &date) const
 {
-    std::ifstream file(fileName.c_str());
+    // Format: YYYY-MM-DD  → toplam 10 karakter
+    if (date.length() != 10)
+        return false;
+    if (date[4] != '-' || date[7] != '-')
+        return false;
 
+    // Rakam kontrolü
+    for (int i = 0; i < 10; ++i)
+    {
+        if (i == 4 || i == 7)
+            continue;
+        if (!std::isdigit(static_cast<unsigned char>(date[i])))
+            return false;
+    }
+
+    int year = std::atoi(date.substr(0, 4).c_str());
+    int month = std::atoi(date.substr(5, 2).c_str());
+    int day = std::atoi(date.substr(8, 2).c_str());
+
+    if (year <= 0)
+        return false;
+    if (month < 1 || month > 12)
+        return false;
+    if (day < 1 || day > 31)
+        return false;
+
+    return true;
+}
+
+bool BitcoinExchange::parseValue(const std::string &str, double &value) const
+{
+    std::stringstream ss(str);
+    ss >> value;
+    if (ss.fail())
+        return false;
+
+    // Fazladan karakter olmamalı
+    char c;
+    if (ss >> c)
+        return false;
+
+    return true;
+}
+
+// ----------------- data.csv okuma -----------------
+void BitcoinExchange::readFromDB()
+{
+    std::ifstream file("data.csv");
     if (!file.is_open())
     {
-        std::cerr << "Cannot open file: " << fileName << std::endl;
+        std::cerr << "Error: could not open database file." << std::endl;
         return;
     }
 
     std::string line;
-    std::getline(file, line);
+
+    // header satırını atla
+    if (!std::getline(file, line))
+        return;
+
     while (std::getline(file, line))
-        checkLineAndPrint(line);
-    file.close();
+    {
+        line = trim(line);
+        if (line.empty())
+            continue;
+
+        std::stringstream ss(line);
+        std::string date, rateStr;
+
+        if (!std::getline(ss, date, ','))
+            continue;
+        if (!std::getline(ss, rateStr))
+            continue;
+
+        date = trim(date);
+        rateStr = trim(rateStr);
+        if (date.empty() || rateStr.empty())
+            continue;
+
+        double rateD;
+        if (!parseValue(rateStr, rateD))
+            continue;
+
+        this->dataBase[date] = static_cast<float>(rateD);
+    }
 }
 
+// ----------------- Tarih bul & yaz -----------------
+void BitcoinExchange::findDateAndPrint(const std::string &date, double value) const
+{
+    if (this->dataBase.empty())
+    {
+        std::cout << "Error: no database loaded." << std::endl;
+        return;
+    }
+
+    std::map<std::string, float>::const_iterator it = this->dataBase.find(date);
+
+    if (it != this->dataBase.end())
+    {
+        std::cout << date << " => " << value << " = " << (it->second * value) << std::endl;
+        return;
+    }
+
+    it = this->dataBase.lower_bound(date);
+
+    // date DB'deki en küçük tarihten bile küçükse
+    if (it == this->dataBase.begin())
+    {
+        std::cout << "Error: no valid date found." << std::endl;
+        return;
+    }
+
+    // lower_bound ya end() ya da date'ten büyük olabilir → bir önceki lower
+    if (it == this->dataBase.end() || it->first > date)
+        --it;
+
+    std::cout << date << " => " << value << " = " << (it->second * value) << std::endl;
+}
+
+// ----------------- Tek satır kontrol & print -----------------
+void BitcoinExchange::checkLineAndPrint(const std::string &line)
+{
+    std::string trimmed = trim(line);
+    if (trimmed.empty())
+        return;
+
+    std::string::size_type pos = trimmed.find('|');
+    if (pos == std::string::npos)
+    {
+        std::cout << "Error: bad input => " << trimmed << std::endl;
+        return;
+    }
+
+    std::string date = trim(trimmed.substr(0, pos));
+    std::string valueStr = trim(trimmed.substr(pos + 1));
+
+    if (date.empty() || valueStr.empty())
+    {
+        std::cout << "Error: bad input => " << trimmed << std::endl;
+        return;
+    }
+
+    if (!isValidDate(date))
+    {
+        std::cout << "Error: bad input => " << date << std::endl;
+        return;
+    }
+
+    double value;
+    if (!parseValue(valueStr, value))
+    {
+        std::cout << "Error: bad input => " << trimmed << std::endl;
+        return;
+    }
+
+    if (value <= 0)
+    {
+        std::cout << "Error: not a positive number." << std::endl;
+        return;
+    }
+    if (value > 1000.0)
+    {
+        std::cout << "Error: too large a number." << std::endl;
+        return;
+    }
+
+    findDateAndPrint(date, value);
+}
+
+// ----------------- input dosyasını okuma -----------------
+void BitcoinExchange::readFromFile(const std::string &fileName)
+{
+    std::ifstream file(fileName.c_str());
+    if (!file.is_open())
+    {
+        std::cerr << "Error: could not open file." << std::endl;
+        return;
+    }
+
+    std::string line;
+
+    // input header: "date | value" satırını atla
+    if (!std::getline(file, line))
+        return;
+
+    while (std::getline(file, line))
+        checkLineAndPrint(line);
+
+    file.close();
+}

@@ -1,147 +1,105 @@
+
 #include "PmergeMe.hpp"
-#include <cstdlib>
+#include <algorithm>
 
-#define RESET   "\033[0m"
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
+// Merge function for vector
+void merge(std::vector<int>& vec, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    std::vector<int> L(n1);
+    std::vector<int> R(n2);
 
-PmergeMe::PmergeMe() {}
-PmergeMe::~PmergeMe() {}
-PmergeMe::PmergeMe(const PmergeMe &cpy)
-{
-    if (this != &cpy) {
-        this->lst = cpy.lst;
-        this->vec = cpy.vec;
-    }
-}
+    for (int i = 0; i < n1; ++i)
+        L[i] = vec[left + i];
+    for (int i = 0; i < n2; ++i)
+        R[i] = vec[mid + 1 + i];
 
-PmergeMe &PmergeMe::operator=(const PmergeMe &copy)
-{
-    (void)copy;
-    return *this;
-}
-
-template <typename T>
-void printContainer(T &container)
-{
-    for (typename T::iterator it = container.begin(); it != container.end(); ++it)
-        std::cout << *it << " ";
-    std::cout << std::endl;
-}
-
-
-int checkIfNumber(const std::string& value)
-{
-    for (int i = 0; i < (int)value.length(); i++)
-    {
-        if (!(value[i] >= '0' && value[i] <= '9'))
-        {
-            std::cerr << "Error: Non-numeric character found: " << value << std::endl;
-            return 1;
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            vec[k] = L[i];
+            ++i;
+        } else {
+            vec[k] = R[j];
+            ++j;
         }
+        ++k;
     }
-    return 0;
+
+    while (i < n1) {
+        vec[k] = L[i];
+        ++i;
+        ++k;
+    }
+
+    while (j < n2) {
+        vec[k] = R[j];
+        ++j;
+        ++k;
+    }
 }
 
-int PmergeMe::validateAndFill(int argc, char **argv)
-{
-    for (int i = 1; i < argc; i++)
-    {
-        if (checkIfNumber(argv[i]))
-            return 1;
-        int value = std::atoi(argv[i]);
-        if (value < 1)
-        {
-            std::cerr << "Error: Value must be greater than 0: " << argv[i] << std::endl;
-            return 1;
+// Merge sort function for vector
+void mergeSort(std::vector<int>& vec, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(vec, left, mid);
+        mergeSort(vec, mid + 1, right);
+        merge(vec, left, mid, right);
+    }
+}
+
+// Merge-insert sort for vector
+void mergeInsertSort(std::vector<int>& vec) {
+    mergeSort(vec, 0, vec.size() - 1);
+}
+
+// Merge function for list
+void merge(std::list<int>& lst, std::list<int>& left, std::list<int>& right) {
+    std::list<int>::iterator it = lst.begin();
+    std::list<int>::iterator left_it = left.begin();
+    std::list<int>::iterator right_it = right.begin();
+
+    while (left_it != left.end() && right_it != right.end()) {
+        if (*left_it <= *right_it) {
+            *it = *left_it;
+            ++left_it;
+        } else {
+            *it = *right_it;
+            ++right_it;
         }
-        vec.push_back(value);
-        lst.push_back(value);
+        ++it;
     }
-    return 0;
-}
 
-std::list<int> mergeLst(std::list<int> &left, std::list<int> &right)
-{
-    std::list<int> res;
-    std::list<int>::iterator it1 = left.begin();
-    std::list<int>::iterator it2 = right.begin();
-
-    while (it1 != left.end() && it2 != right.end())
-    {
-        if (*it1 <= *it2)
-            res.push_back(*it1++);
-        else
-            res.push_back(*it2++);
+    while (left_it != left.end()) {
+        *it = *left_it;
+        ++left_it;
+        ++it;
     }
-    while (it1 != left.end())
-        res.push_back(*it1++);
-    while (it2 != right.end())
-        res.push_back(*it2++);
 
-    return res;
-}
-
-std::list<int> PmergeMe::sortLst(std::list<int> &lst)
-{
-    if (lst.size() <= 1) return lst;
-    
-    std::list<int>::iterator mid = lst.begin();
-    std::advance(mid, lst.size() / 2);
-    std::list<int> left(lst.begin(), mid);
-    std::list<int> right(mid, lst.end());
-    
-    left = sortLst(left);
-    right = sortLst(right);
-
-    return mergeLst(left, right);
-}
-
-std::vector<int> mergeVec(std::vector<int> &left, std::vector<int> &right)
-{
-    std::vector<int> res;
-    size_t i = 0, j = 0;
-    
-    while (i < left.size() && j < right.size())
-    {
-        if (left[i] <= right[j])
-            res.push_back(left[i++]);
-        else
-            res.push_back(right[j++]);
+    while (right_it != right.end()) {
+        *it = *right_it;
+        ++right_it;
+        ++it;
     }
-    while (i < left.size())
-        res.push_back(left[i++]);
-    while (j < right.size())
-        res.push_back(right[j++]);
-    return res;
 }
 
-std::vector<int> PmergeMe::sortVec(std::vector<int> &vec)
-{
-    if (vec.size() <= 1) return vec;
+// Merge sort function for list
+void mergeSort(std::list<int>& lst) {
+    if (lst.size() <= 1) return;
 
-    int mid = vec.size() / 2;
-    std::vector<int> left(vec.begin(), vec.begin() + mid);
-    std::vector<int> right(vec.begin() + mid, vec.end());
+    std::list<int> left, right;
+    std::list<int>::iterator it = lst.begin();
+    std::advance(it, lst.size() / 2);
+    left.splice(left.begin(), lst, lst.begin(), it);
+    right.splice(right.begin(), lst, lst.begin(), lst.end());
 
-    left = sortVec(left);
-    right = sortVec(right);
-
-    return mergeVec(left, right); 
+    mergeSort(left);
+    mergeSort(right);
+    merge(lst, left, right);
 }
 
-void PmergeMe::executer(int ac, char **av)
-{
-    if (validateAndFill(ac, av))
-        return ;
-    std::cout << RED "Vector container before sorting: " GREEN << std::endl;
-    printContainer(vec);
-    std::cout << RED "List container before sorting: " GREEN << std::endl;
-    printContainer(lst);
-    std::cout << RED "Vector container after sorting: " GREEN << std::endl;
-    std::vector<int> sortedVec = sortVec(vec);
-    printContainer(sortedVec);
-    std::cout << RED "List container after sorting: " GREEN << std::endl;
-    std::list<int> sortedLst = sortLst(lst);
-    printContainer(sortedLst);
+// Merge-insert sort for list
+void mergeInsertSort(std::list<int>& lst) {
+    mergeSort(lst);
 }
